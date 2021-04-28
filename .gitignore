@@ -31,7 +31,7 @@
 *.vcxproj
 *.filters
 *.user
-.VS/
+.vs\
 
 # Executables
 *.exe
