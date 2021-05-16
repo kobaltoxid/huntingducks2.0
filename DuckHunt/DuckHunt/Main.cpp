@@ -11,5 +11,12 @@ int main(int argc, char* argv[]) {
 		std::cout << err.what() << std::endl;
 	}
 
+	while (Engine::getEngine()->isRunning())
+	{
+		Engine::getEngine()->Update();
+	}
+
+	Engine::getEngine()->Clean();
+
 	return 0;
 }
