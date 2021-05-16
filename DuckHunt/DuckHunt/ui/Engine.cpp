@@ -31,4 +31,18 @@ void Engine::Init() {
 	if (renderer == nullptr) {
 		throw SDL_exception("Could not create renderer!");
 	}
+
+	running = true;
+}
+
+void Engine::Update() {
+
+}
+
+bool Engine::isRunning() {
+	return running;
+}
+
+void Engine::Clean() {
+
 }

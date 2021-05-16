@@ -8,6 +8,8 @@ private:
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
+	bool running;
 public:
 	static Engine* getEngine() {
 		engine = (engine == nullptr) ? new Engine() : engine;
@@ -15,6 +17,9 @@ public:
 	}
 
 	void Init();
+	void Update();
+	bool isRunning();
+	void Clean();
 };
 
 
