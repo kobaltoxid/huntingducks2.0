@@ -10,8 +10,8 @@ void Player::Shoot() {
 }
 
 void Player::eventHandler(SDL_Event& event) {
-	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(curX&, curY&)) == SDL_BUTTON_LEFT) {
-
+	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT) {
+		Shoot();
 	}
 }
 
