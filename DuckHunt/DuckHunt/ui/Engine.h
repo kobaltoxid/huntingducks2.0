@@ -3,8 +3,10 @@
 
 class Engine {
 private:
-	Engine(){}
-	static Engine *engine;
+	Engine() {}
+	~Engine();
+
+	static Engine* engine;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -17,10 +19,13 @@ public:
 	}
 
 	void Init();
-	void Update();
+	void Update();	
 	bool isRunning();
 	void Clean();
+	void Render();
+	void handleEvents();
 };
 
 
 #endif //ENGINE_H
+
