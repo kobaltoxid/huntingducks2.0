@@ -1,7 +1,4 @@
-﻿  Enemy.cpp
-  Player.cpp
-  Texture.cpp
+﻿  Duck.cpp
   Engine.cpp
-  Main.cpp
   Generating Code...
-  DuckHunt.vcxproj -> D:\Programming\Duck-Hunt\huntingducks2.0\DuckHunt\Debug\DuckHunt.exe
+  DuckHunt.vcxproj -> D:\OneDrive - Shavarska DE\Documents\GitHub\huntingducks2.0\DuckHunt\DuckHunt\Debug\DuckHunt.exe
