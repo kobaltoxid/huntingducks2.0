@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdlib.h> 
 #include <iostream>
 #include <string>
 
@@ -37,9 +38,40 @@ Duck::~Duck() {
 //}
 
 void Duck::move() {
-	if (_x < 700 && _y < 700) {
+	srand(time(NULL));
+	int dir = rand() % 8 + 1;
+	switch (dir)
+	{
+	case 1:
+		_y -= 3;
+		break;
+	case 2:
+		_x += 3;
+		_y -= 3;
+		break;
+	case 3:
+		_x += 3;
+		break;
+	case 4:
 		_x += 3;
 		_y += 3;
+		break;
+	case 5:
+		_y += 3;
+		break;
+	case 6:
+		_x -= 3;
+		_y += 3;
+		break;
+	case 7:
+		_x -= 3;
+		break;
+	case 8:
+		_x -= 3;
+		_y -= 3;
+		break;
+	default:
+		break;
 	}
 }
 
