@@ -11,7 +11,7 @@ Duck::Duck(int w, int h, int x, int y):
 {
 	img = { _x, _y, _w, _h };
 }
-
+//
 //Duck::Duck(SDL_Renderer* renderer, int w, int h, int x, int y, const std::string& image_path) :
 //	_w(w), _h(h), _x(x), _y(y)
 //{
@@ -40,39 +40,42 @@ Duck::~Duck() {
 void Duck::move() {
 	srand(time(NULL));
 	int dir = rand() % 8 + 1;
+	int distance = rand() % 3 + 3;
 	switch (dir)
 	{
 	case 1:
-		_y -= 3;
+		_y -= distance;
 		break;
 	case 2:
-		_x += 3;
-		_y -= 3;
+		_x += distance;
+		_y -= distance;
 		break;
 	case 3:
-		_x += 3;
+		_x += distance;
 		break;
 	case 4:
-		_x += 3;
-		_y += 3;
+		_x += distance;
+		_y += distance;
 		break;
 	case 5:
-		_y += 3;
+		_y += distance;
 		break;
 	case 6:
-		_x -= 3;
-		_y += 3;
+		_x -= distance;
+		_y += distance;
 		break;
 	case 7:
-		_x -= 3;
+		_x -= distance;
 		break;
 	case 8:
-		_x -= 3;
-		_y -= 3;
+		_x -= distance;
+		_y -= distance;
 		break;
 	default:
 		break;
 	}
+
+	img = { _x, _y, _w, _h };
 }
 
 int Duck::getX() {
