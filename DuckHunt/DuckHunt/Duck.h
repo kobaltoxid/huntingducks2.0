@@ -24,7 +24,7 @@ private:
 	int _w, _h;
 	int _x, _y;
 	SDL_Rect img;
-	//SDL_Texture* _duck_texture = nullptr;
+	/*SDL_Texture* _duck_texture = nullptr;*/
 };
 
 #endif
