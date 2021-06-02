@@ -1,17 +1,33 @@
 #include <player/Player.h>
+#include <bridge/bridge.h>
 
 #include <SDL.h>
 #include <iostream>
 
-Player* Player::player = nullptr;
-
-void Player::Shoot() {
+Player::Player() {
 
 }
 
-void Player::eventHandler(SDL_Event& event) {
+Player::~Player() {
+
+}
+
+bool Player::Shoot(SDL_Rect* duck, SDL_Rect* scope) {
+	if (Collision(duck, scope)) {
+		std::cout << "Success" << "\n";
+		return true;
+	}
+	else {
+		std::cout << "Failure" << "\n";
+		return false;
+	}
+}
+
+void Player::eventHandler(SDL_Event& event, SDL_Rect* duck) {
 	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT) {
-		Shoot();
+		this->gBox.x = curX;
+		this->gBox.y = curY;
+		Shoot(duck, this->getRect());
 	}
 }
 
@@ -42,6 +58,10 @@ bool Player::die() {
 
 bool Player::isAlive() {
 	return alive;
+}
+
+SDL_Rect* Player::getRect() {
+	return &gBox;
 }
 
 

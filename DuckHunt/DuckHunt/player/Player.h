@@ -6,22 +6,19 @@
 
 class Player {
 private:
-	Player() {}
 	static Player* player;
 	bool alive = 1;
 	SDL_Rect gBox;
-	int gWidth, gHeight = 10;
+	int gWidth, gHeight = 40;
 	int curX = 0;
 	int curY = 0;
 	int Score = 0;
 
 public:
-	static Player* getPlayer() {
-		player = (player == NULL) ? new Player() : frog;
-		return player;
-	}
-	void Shoot();
-	void eventHandler(SDL_Event& event);
+	Player();
+	~Player();
+	bool Shoot(SDL_Rect* duck, SDL_Rect* scope);
+	void eventHandler(SDL_Event& event, SDL_Rect* duck);
 	int getScore();
 	int getCurX();
 	int getCurY();
@@ -29,6 +26,7 @@ public:
 	void incScore(int inc);
 	bool die();
 	bool isAlive();
+	SDL_Rect* getRect();
 };
 
 #endif
