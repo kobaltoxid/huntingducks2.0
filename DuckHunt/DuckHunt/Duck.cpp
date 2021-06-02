@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdlib.h> 
 #include <iostream>
 #include <string>
 
@@ -9,38 +10,65 @@ Duck::Duck(int w, int h, int x, int y):
 	_w(w), _h(h), _x(x), _y(y)
 {
 	img = { _x, _y, _w, _h };
+	alive = true;
 }
-
-//Duck::Duck(SDL_Renderer* renderer, int w, int h, int x, int y, const std::string& image_path) :
-//	_w(w), _h(h), _x(x), _y(y)
-//{
-//	auto surface = IMG_Load(image_path.c_str());
-//	if (!surface) {
-//		std::cerr << "Failed to create surface.\n";
-//	}
-//
-//	_duck_texture = SDL_CreateTextureFromSurface(renderer, surface);
-//
-//	if (!_duck_texture) {
-//		std::cerr << "Failed to create texture.\n";
-//	}
-//	SDL_FreeSurface(surface);
-//}
 
 Duck::~Duck() {
 	
 }
 
-//void Duck::draw(SDL_Renderer* renderer) const {
-//	SDL_Rect img = { _x, _y, _w, _h };
-//	SDL_RenderCopy(renderer, _duck_texture, NULL, &img);
-//}
 
 void Duck::move() {
-	if (_x < 700 && _y < 700) {
-		_x += 3;
-		_y += 3;
+	srand(time(NULL));
+	int dir = rand() % 8 + 1;
+	int distance = rand() % 2 + 5;
+	switch (dir)
+	{
+	case 1:
+		if(_y - distance > 0)
+			_y -= distance;
+		break;
+	case 2:
+		if (_x + distance < 700 && _y - distance > 0) {
+			_x += distance;
+			_y -= distance;
+		}
+		break;
+	case 3:
+		if(_x + distance < 700)
+			_x += distance;
+		break;
+	case 4:
+		if (_x + distance < 700 && _y + distance < 700) {
+			_x += distance;
+			_y += distance;
+		}
+		break;
+	case 5:
+		if (_y + distance < 700)
+			_y += distance;
+		break;
+	case 6:
+		if (_x - distance > 0 && _y + distance < 700) {
+			_x -= distance;
+			_y += distance;
+		}		
+		break;
+	case 7:
+		if(_x - distance > 0)
+			_x -= distance;
+		break;
+	case 8:
+		if (_x - distance > 0 && _y - distance > 0) {
+			_x -= distance;
+			_y -= distance;
+		}
+		break;
+	default:
+		break;
 	}
+
+	img = { _x, _y, _w, _h };
 }
 
 int Duck::getX() {
@@ -58,7 +86,7 @@ bool Duck::isAlive(){
 bool Duck::die() {
 
 	alive = 0;
-
+	
 	return alive;
 }
 
