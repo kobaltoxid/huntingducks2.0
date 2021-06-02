@@ -1,10 +1,15 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include <Duck.h>
+#include <string>
+
 class Engine {
 private:
-	Engine(){}
-	static Engine *engine;
+	Engine() {}
+	~Engine();
+
+	static Engine* engine;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -17,10 +22,14 @@ public:
 	}
 
 	void Init();
-	void Update();
+	void Update();	
 	bool isRunning();
 	void Clean();
+	void Render();
+	void handleEvents();
+	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
 };
 
 
 #endif //ENGINE_H
+
