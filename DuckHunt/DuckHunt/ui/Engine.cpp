@@ -59,6 +59,7 @@ void Engine::Update() {
 	duck1.move();
 	rect = duck1.getRect();
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl;
 }
 
 bool Engine::isRunning() {
@@ -85,6 +86,14 @@ void Engine::handleEvents() {
 	case SDL_QUIT:
 		running = false;
 		break;
+	case SDL_KEYDOWN:
+		switch (event.key.keysym.sym)
+		{
+		case SDLK_SPACE:
+			duck1.die();
+		default:
+			break;
+		}
 	default:
 		break;
 	}

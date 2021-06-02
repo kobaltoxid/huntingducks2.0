@@ -1,6 +1,2 @@
-﻿  Duck.cpp
-D:\OneDrive - Shavarska DE\Documents\GitHub\huntingducks2.0\DuckHunt\DuckHunt\Duck.cpp(41,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Main.cpp
-  Engine.cpp
-  Generating Code...
+﻿  Engine.cpp
   DuckHunt.vcxproj -> D:\OneDrive - Shavarska DE\Documents\GitHub\huntingducks2.0\DuckHunt\DuckHunt\Debug\DuckHunt.exe
