@@ -37,3 +37,7 @@
 *.exe
 *.out
 *.app
+*.ilk
+*.tlog
+*.pdb
+*.log
