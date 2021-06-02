@@ -1,6 +1,9 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include <Duck.h>
+#include <string>
+
 class Engine {
 private:
 	Engine() {}
@@ -24,6 +27,7 @@ public:
 	void Clean();
 	void Render();
 	void handleEvents();
+	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
 };
 
 
