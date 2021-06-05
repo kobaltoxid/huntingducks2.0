@@ -24,7 +24,6 @@ void Duck::move() {
 		
 		int dir = rand() % 8 + 1;		
 		int distance = rand() % 3 + 5;
-		std::cout << distance << std::endl;
 
 		switch (dir)
 		{
