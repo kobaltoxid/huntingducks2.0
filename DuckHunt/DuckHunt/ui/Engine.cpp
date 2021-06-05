@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include "Engine.h"
 #include "exceptions/SDL_exception.h"
-#include <Duck.h>
+#include <duck/Duck.h>
 #include <player/Player.h>
 #include <string>
 
