@@ -24,13 +24,17 @@ bool Player::Shoot(Duck &duck, SDL_Rect* scope) {
 	}
 }
 
-void Player::eventHandler(SDL_Event& event, Duck &duck) {
+void Player::eventHandler(SDL_Event& event, Duck &duck, Duck& duck1) {
 	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT) {
 		this->gBox.x = curX;
 		this->gBox.y = curY;
 		if (Shoot(duck, this->getRect()))
 		{
 			duck.die();
+		}
+		if (Shoot(duck1, this->getRect()))
+		{
+			duck1.die();
 		}
 	}
 }
