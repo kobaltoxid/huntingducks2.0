@@ -1,5 +1,6 @@
 #include <player/Player.h>
 #include <bridge/bridge.h>
+#include <duck/Duck.h>
 
 #include <SDL.h>
 #include <iostream>
@@ -12,8 +13,8 @@ Player::~Player() {
 
 }
 
-bool Player::Shoot(SDL_Rect* duck, SDL_Rect* scope) {
-	if (Collision(duck, scope)) {
+bool Player::Shoot(Duck &duck, SDL_Rect* scope) {
+	if (Collision(duck.getRect(), scope)) {
 		std::cout << "Success" << "\n";
 		return true;
 	}
@@ -23,11 +24,14 @@ bool Player::Shoot(SDL_Rect* duck, SDL_Rect* scope) {
 	}
 }
 
-void Player::eventHandler(SDL_Event& event, SDL_Rect* duck) {
+void Player::eventHandler(SDL_Event& event, Duck &duck) {
 	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT) {
 		this->gBox.x = curX;
 		this->gBox.y = curY;
-		Shoot(duck, this->getRect());
+		if (Shoot(duck, this->getRect()))
+		{
+			duck.die();
+		}
 	}
 }
 
