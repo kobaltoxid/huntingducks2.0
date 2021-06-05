@@ -1,4 +1,4 @@
-#include "Duck.h"
+#include "duck/Duck.h"
 
 #include <SDL.h>
 #include <SDL_image.h>

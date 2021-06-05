@@ -1,8 +1,9 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <Duck.h>
+#include <duck/Duck.h>
 #include <string>
+#include <SDL.h>
 
 class Engine {
 private:
