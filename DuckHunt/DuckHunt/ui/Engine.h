@@ -3,6 +3,7 @@
 
 #include <duck/Duck.h>
 #include <string>
+#include <SDL.h>
 
 class Engine {
 private:
