@@ -26,12 +26,12 @@
 *.a
 *.lib
 
-#VS Community Config files
+# VS Community Config files
 *.sln
 *.vcxproj
 *.filters
 *.user
-\.vs/
+.vs/
 
 # Executables
 *.exe
@@ -41,3 +41,6 @@
 *.tlog
 *.pdb
 *.log
+
+# Debug folder
+Debug/
