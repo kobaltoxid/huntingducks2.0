@@ -3,6 +3,7 @@
 #define PLAYER_H
 
 #include <SDL.h>
+#include <duck/Duck.h>
 
 class Player {
 private:
@@ -17,8 +18,8 @@ private:
 public:
 	Player();
 	~Player();
-	bool Shoot(SDL_Rect* duck, SDL_Rect* scope);
-	void eventHandler(SDL_Event& event, SDL_Rect* duck);
+	bool Shoot(Duck &duck, SDL_Rect* scope);
+	void eventHandler(SDL_Event& event, Duck &duck);
 	int getScore();
 	int getCurX();
 	int getCurY();
