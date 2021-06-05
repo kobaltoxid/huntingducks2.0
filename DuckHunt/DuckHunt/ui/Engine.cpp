@@ -10,7 +10,7 @@
 const int WIDTH = 800, HEIGHT = 800;
 const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
-std::string duck_img_path = "DuckHunt/DuckHunt/duck/duck1.png";
+std::string duck_img_path = "images/duck.png";
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
 Player player;
 
