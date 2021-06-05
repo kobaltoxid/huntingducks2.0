@@ -41,6 +41,5 @@
 *.tlog
 *.pdb
 *.log
-
 # Debug folder
 Debug/
