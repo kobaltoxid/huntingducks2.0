@@ -31,7 +31,7 @@
 *.vcxproj
 *.filters
 *.user
-\.vs/
+.vs/
 
 # Executables
 *.exe
@@ -43,4 +43,4 @@
 *.log
 
 # Debug folder
-\Debug
+Debug/
