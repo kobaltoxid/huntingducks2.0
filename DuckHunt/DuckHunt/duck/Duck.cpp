@@ -1,4 +1,4 @@
-#include "Duck.h"
+#include "duck/Duck.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -37,21 +37,21 @@ void Duck::move() {
 			}
 			break;
 		case 3:
-			if (_x + distance < 700)
+			if (_x + distance < 500)
 				_x += distance;
 			break;
 		case 4:
-			if (_x + distance < 700 && _y + distance < 700) {
+			if (_x + distance < 700 && _y + distance < 500) {
 				_x += distance;
 				_y += distance;
 			}
 			break;
 		case 5:
-			if (_y + distance < 700)
+			if (_y + distance < 500)
 				_y += distance;
 			break;
 		case 6:
-			if (_x - distance > 0 && _y + distance < 700) {
+			if (_x - distance > 0 && _y + distance < 500) {
 				_x -= distance;
 				_y += distance;
 			}
@@ -96,6 +96,13 @@ bool Duck::die() {
 
 	alive = 0;
 	
+	return alive;
+}
+
+bool Duck::spawn() {
+
+	alive = 1;
+
 	return alive;
 }
 
