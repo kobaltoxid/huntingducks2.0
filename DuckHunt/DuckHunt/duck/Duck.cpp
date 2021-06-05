@@ -21,9 +21,11 @@ Duck::~Duck() {
 
 void Duck::move() {
 	if (alive) {
-		srand(time(NULL));
-		int dir = rand() % 8 + 1;
-		int distance = rand() % 2 + 5;
+		
+		int dir = rand() % 8 + 1;		
+		int distance = rand() % 3 + 5;
+		std::cout << distance << std::endl;
+
 		switch (dir)
 		{
 		case 1:

@@ -17,6 +17,7 @@ std::string grass_img_path = "images/grass.png";
 std::string background_img_path = "images/background.png";
 
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
+Duck duck2(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x - 100, duck_pos_y-100);
 Player player;
 
 SDL_Texture* duckTexture;
@@ -29,6 +30,8 @@ SDL_Rect grassRect = { 0, 600, 800, 200 };
 
 Engine* Engine::engine = nullptr;
 void Engine::Init() {
+	
+	//srand(time(NULL));
 	SDL_Surface* windowSurface = NULL;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -69,6 +72,8 @@ void Engine::Init() {
 	duckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+	rect = duck2.getRect();
+	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
 	tmpSurface = IMG_Load(grass_img_path.c_str());
 	grassTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
@@ -78,25 +83,21 @@ void Engine::Init() {
 }
 
 void Engine::Update() {
-	//handle event - any key
-	//game state (start, stop)
-	if (isGameStarted == false) {
-		//render menu bckgrnd
-		handleOnMenu();
-	}
-	else{
-		if (gameA == true) {
-			//smth
-			duck1.move();
-			rect = duck1.getRect();
-			SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
-			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
-			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
-		}
-		else {
-			
-		}
-	}
+
+	SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
+
+	srand((unsigned)(time(0)));
+	duck1.move();
+	rect = duck1.getRect();
+	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+	srand((unsigned)(time(0) + 47));
+	duck2.move();
+	rect = duck2.getRect();
+	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
+	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl
 }
 
 bool Engine::isRunning() {
@@ -140,7 +141,7 @@ void Engine::handleOnMenu() {
 void Engine::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
-	player.eventHandler(event, duck1);
+	player.eventHandler(event, duck1, duck2);
 	switch (event.type) {
 	case SDL_QUIT:
 		running = false;
