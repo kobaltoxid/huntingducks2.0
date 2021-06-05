@@ -57,7 +57,7 @@ void Engine::Init() {
 	}
 
 	running = true;
-
+	isGameStarted = false;
 
 	//Place to initialize objects
 
@@ -97,7 +97,7 @@ void Engine::Update() {
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
 	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
-	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl;
+	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl
 }
 
 bool Engine::isRunning() {
@@ -117,6 +117,27 @@ void Engine::Render()
 	SDL_RenderClear(renderer);
 }
 
+
+void Engine::handleOnMenu() {
+	SDL_Event event;
+	SDL_PollEvent(&event);
+
+	if (event.type == SDL_KEYDOWN) {
+		switch (event.key.keysym.sym)
+		{
+		case SDLK_a:
+			gameA = true;
+			isGameStarted = true;
+			break;
+		case SDLK_b:
+			gameB = true;
+			isGameStarted = true;
+			break;
+		}
+	}
+	else if (event.type == SDL_QUIT) running = false;
+}
+
 void Engine::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -126,11 +147,12 @@ void Engine::handleEvents() {
 		running = false;
 		break;
 	case SDL_KEYDOWN:
+		isGameStarted = true;
 		switch (event.key.keysym.sym)
 		{
-		case SDLK_SPACE:
+		/*case SDLK_SPACE:
 			duck1.die();
-			break;
+			break;*/
 		case SDLK_s:
 			duck1.spawn();
 			break;
