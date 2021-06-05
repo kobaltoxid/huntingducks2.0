@@ -1,7 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <Duck.h>
+#include <duck/Duck.h>
 #include <string>
 
 class Engine {
