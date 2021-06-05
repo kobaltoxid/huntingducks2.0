@@ -97,7 +97,6 @@ void Engine::Update() {
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
 	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
-	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl;
 }
 
 bool Engine::isRunning() {
@@ -133,6 +132,7 @@ void Engine::handleEvents() {
 			break;
 		case SDLK_s:
 			duck1.spawn();
+			duck2.spawn();
 			break;
 		default:
 			break;
