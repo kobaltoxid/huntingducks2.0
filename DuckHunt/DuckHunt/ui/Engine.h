@@ -16,6 +16,8 @@ private:
 	SDL_Renderer* renderer;
 
 	bool running;
+	bool isGameStarted;
+	bool gameA = false, gameB = false;
 public:
 	static Engine* getEngine() {
 		engine = (engine == nullptr) ? new Engine() : engine;
@@ -27,6 +29,7 @@ public:
 	bool isRunning();
 	void Clean();
 	void Render();
+	void handleOnMenu();
 	void handleEvents();
 	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
 };
