@@ -11,6 +11,7 @@ public:
 	~Duck();
 	void eventHandler(SDL_Event& event);
 	bool die();
+	bool spawn();
 	bool isAlive();
 	void move();
 	int getX();

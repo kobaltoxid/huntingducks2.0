@@ -12,12 +12,22 @@ const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
 
 std::string duck_img_path = "images/duck.png";
+<<<<<<< Updated upstream
 
+=======
+std::string grass_img_path = "images/grass.png";
+std::string background_img_path = "images/background.png";
+>>>>>>> Stashed changes
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
 Player player;
 
 SDL_Texture* duckTexture;
+SDL_Texture* grassTexture;
+SDL_Texture* backgroundTexture;
 SDL_Rect* rect;
+SDL_Rect bgRect = {0,0,800,800};
+SDL_Rect grassRect = { 0, 600, 800, 200 };
+
 
 Engine* Engine::engine = nullptr;
 void Engine::Init() {
@@ -50,11 +60,22 @@ void Engine::Init() {
 
 	//Place to initialize objects
 
+	
+	auto tmpSurface = IMG_Load(background_img_path.c_str());
+	backgroundTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
+	SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
+
 	rect = duck1.getRect();
-	auto tmpSurface = IMG_Load(duck_img_path.c_str());
+	tmpSurface = IMG_Load(duck_img_path.c_str());
 	duckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+	tmpSurface = IMG_Load(grass_img_path.c_str());
+	grassTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
+	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 }
 
@@ -62,7 +83,9 @@ void Engine::Update() {
 
 	duck1.move();
 	rect = duck1.getRect();
+	SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl;
 }
 
@@ -96,6 +119,10 @@ void Engine::handleEvents() {
 		{
 		case SDLK_SPACE:
 			duck1.die();
+			break;
+		case SDLK_s:
+			duck1.spawn();
+			break;
 		default:
 			break;
 		}
