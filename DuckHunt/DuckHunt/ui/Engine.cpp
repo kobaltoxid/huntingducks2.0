@@ -4,13 +4,15 @@
 #include "Engine.h"
 #include "exceptions/SDL_exception.h"
 #include <Duck.h>
+#include <player/Player.h>
 #include <string>
 
 const int WIDTH = 800, HEIGHT = 800;
 const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
-std::string duck_img_path = "duck/duck1.png";
+std::string duck_img_path = "DuckHunt/DuckHunt/duck/duck1.png";
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
+Player player;
 
 SDL_Texture* duckTexture;
 SDL_Rect* rect;
@@ -51,7 +53,7 @@ void Engine::Init() {
 	duckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
-	
+
 }
 
 void Engine::Update() {
@@ -73,7 +75,7 @@ void Engine::Clean() {
 	std::cout << "Game cleaned." << std::endl;
 }
 
-void Engine::Render() 
+void Engine::Render()
 {
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
@@ -81,7 +83,8 @@ void Engine::Render()
 
 void Engine::handleEvents() {
 	SDL_Event event;
-	SDL_PollEvent(&event); 
+	SDL_PollEvent(&event);
+	player.eventHandler(event, rect);
 	switch (event.type) {
 	case SDL_QUIT:
 		running = false;
@@ -97,5 +100,5 @@ void Engine::handleEvents() {
 	default:
 		break;
 	}
-	
+
 }
