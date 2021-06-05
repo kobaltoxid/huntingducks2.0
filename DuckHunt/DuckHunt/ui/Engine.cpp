@@ -12,12 +12,8 @@ const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
 
 std::string duck_img_path = "images/duck.png";
-<<<<<<< Updated upstream
-
-=======
 std::string grass_img_path = "images/grass.png";
 std::string background_img_path = "images/background.png";
->>>>>>> Stashed changes
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
 Player player;
 
