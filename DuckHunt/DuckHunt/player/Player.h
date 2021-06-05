@@ -19,7 +19,7 @@ public:
 	Player();
 	~Player();
 	bool Shoot(Duck &duck, SDL_Rect* scope);
-	void eventHandler(SDL_Event& event, Duck &duck);
+	void eventHandler(SDL_Event& event, Duck &duck, Duck& duck1);
 	int getScore();
 	int getCurX();
 	int getCurY();
