@@ -58,45 +58,51 @@ void Engine::Init() {
 
 	running = true;
 	isGameStarted = false;
-
-	//Place to initialize objects
-
 	
 	auto tmpSurface = IMG_Load(background_img_path.c_str());
 	backgroundTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
-	SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
 
-	rect = duck1.getRect();
 	tmpSurface = IMG_Load(duck_img_path.c_str());
 	duckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
-	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
-	rect = duck2.getRect();
-	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
 	tmpSurface = IMG_Load(grass_img_path.c_str());
 	grassTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
-	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 }
 
 void Engine::Update() {
+	std::cout << isGameStarted << std::endl;
+	if (isGameStarted == false) {
+		//render menu bckgrnd
+		handleOnMenu();
+	}
+	else {
+		SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
+		if (gameA == true) {
+			srand((unsigned)(time(0)));
+			duck1.move();
+			rect = duck1.getRect();
+			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+		}
+		else if (gameB == true) {
+			srand((unsigned)(time(0)));
+			duck1.move();
+			rect = duck1.getRect();
+			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
-	SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
+			srand((unsigned)(time(0) + 47));
+			duck2.move();
+			rect = duck2.getRect();
+			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+		}
+		SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
+	}
 
-	srand((unsigned)(time(0)));
-	duck1.move();
-	rect = duck1.getRect();
-	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
-	srand((unsigned)(time(0) + 47));
-	duck2.move();
-	rect = duck2.getRect();
-	SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
-
-	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
+	
 	//std::cout << "X: " << duck1.getX() << "Y: " << duck1.getY() << std::endl
 }
 
@@ -126,10 +132,12 @@ void Engine::handleOnMenu() {
 		switch (event.key.keysym.sym)
 		{
 		case SDLK_a:
+			std::cout << "in A" << std::endl;
 			gameA = true;
 			isGameStarted = true;
 			break;
 		case SDLK_b:
+			std::cout << "in B" << std::endl;
 			gameB = true;
 			isGameStarted = true;
 			break;
@@ -147,7 +155,6 @@ void Engine::handleEvents() {
 		running = false;
 		break;
 	case SDL_KEYDOWN:
-		isGameStarted = true;
 		switch (event.key.keysym.sym)
 		{
 		/*case SDLK_SPACE:

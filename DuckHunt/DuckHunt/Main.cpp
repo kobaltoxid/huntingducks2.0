@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 
 	while (Engine::getEngine()->isRunning())
 	{
-		Engine::getEngine()->handleEvents();
+		//Engine::getEngine()->handleEvents();
 		Engine::getEngine()->Update();
 		Engine::getEngine()->Render();
 	}
