@@ -4,6 +4,7 @@
 #include <duck/Duck.h>
 #include <string>
 #include <SDL.h>
+#include <map>
 
 class Engine {
 private:
@@ -30,8 +31,15 @@ public:
 	void Clean();
 	void Render();
 	void handleOnMenu();
-	void handleEvents();
+	void handleInGameEvents();
 	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
+	void renderAmmo();
+	void renderFenixesOnXPos(int xPos, int count);
+	void renderFenixes();
+	void renderScore();
+	void clearFenixMap();
+	void cleanupBetweenGames();
+	void cleanupBetweenLevels();
 };
 
 
