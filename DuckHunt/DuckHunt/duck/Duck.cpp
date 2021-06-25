@@ -67,8 +67,6 @@ void Duck::move() {
 				_y -= distance;
 			}
 			break;
-		default:
-			break;
 		}
 
 		img = { _x, _y, _w, _h };
