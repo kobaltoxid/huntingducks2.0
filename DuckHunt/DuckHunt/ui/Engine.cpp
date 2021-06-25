@@ -7,6 +7,7 @@
 #include <player/Player.h>
 #include <string>
 #include <map>
+#include <Windows.h>
 
 const int WIDTH = 1280, HEIGHT = 720;
 const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
@@ -15,6 +16,8 @@ int duck_pos_x = 350, duck_pos_y = 350;
 std::string duck_img_path = "images/birds/fenix_up.png";
 std::string menu = "images/menu/menu.png";
 std::string background_img_path = "images/menu/background.png";
+std::string foreground_img_path = "images/menu/foreground.png";
+
 
 std::string zero_shells = "images/ammo/0_shells.png";
 std::string one_shell = "images/ammo/1_shell.png";
@@ -42,6 +45,7 @@ SDL_Texture* two_white_fenixes_texture;
 SDL_Texture* red_white_fenixes_texture;
 SDL_Rect* rect;
 SDL_Rect bgRect = { 0,0,1280,720 };
+SDL_Rect grassRect = { 0,497,1280,223 };
 
 int ammoCount = 3;
 int shotFenixes = 0;
@@ -80,6 +84,10 @@ void Engine::Init() {
 
 	auto tmpSurface = IMG_Load(background_img_path.c_str());
 	backgroundTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
+	
+	tmpSurface = IMG_Load(foreground_img_path.c_str());
+	grassTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 
 	tmpSurface = IMG_Load(duck_img_path.c_str());
@@ -131,7 +139,8 @@ void Engine::Update() {
 		}
 
 		SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
-		renderFenixes();
+		//renderFenixes();
+		
 
 		if (ammoCount == 0 || shotFenixes == 2) {
 			cleanupBetweenLevels();
@@ -144,8 +153,10 @@ void Engine::Update() {
 			duck1.move();
 			rect = duck1.getRect();
 			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
-			handleInGameEvents();
+			handleInGameEvents();		
+			renderFenixes();
 			renderAmmo();
 		}
 		else if (gameB == true) {
@@ -158,12 +169,13 @@ void Engine::Update() {
 			duck2.move();
 			rect = duck2.getRect();
 			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 			handleInGameEvents();
+			renderFenixes();
 			renderAmmo();
 		}
 	}
-	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 }
 
 bool Engine::isRunning() {
@@ -299,8 +311,8 @@ void Engine::cleanupBetweenLevels() {
 	// on the highest Y pos (in the grass)
 	// 	   - die() doesn't do it;
 	// so a new level can be simulated before the fenixes spawn again
-	duck1.die();
-	duck2.die();
+	//duck1.die();
+	//duck2.die();
 
 	levelCount++;
 	ammoCount = 3;
