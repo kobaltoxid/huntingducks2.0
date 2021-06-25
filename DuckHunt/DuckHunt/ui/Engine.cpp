@@ -163,6 +163,7 @@ void Engine::Update() {
 			renderAmmo();
 		}
 	}
+	SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 }
 
 bool Engine::isRunning() {
@@ -194,9 +195,16 @@ void Engine::handleOnMenu() {
 			gameA = true;
 			isGameStarted = true;
 			break;
+
 		case SDLK_b:
 			gameB = true;
 			isGameStarted = true;
+		case SDLK_s:
+			duck1.spawn();
+			duck2.spawn();
+			break;
+		default:
+
 			break;
 		}
 	}
