@@ -15,28 +15,31 @@ Player::~Player() {
 
 bool Player::Shoot(Duck &duck, SDL_Rect* scope) {
 	if (Collision(duck.getRect(), scope)) {
-		std::cout << "Success" << "\n";
+		std::cout << "shot" << std::endl;
 		return true;
 	}
 	else {
-		std::cout << "Failure" << "\n";
 		return false;
 	}
 }
 
-void Player::eventHandler(SDL_Event& event, Duck &duck, Duck& duck1) {
+bool Player::eventHandler(SDL_Event& event, Duck &duck, Duck& duck1) {
+	bool checker = false;
 	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT) {
 		this->gBox.x = curX;
 		this->gBox.y = curY;
 		if (Shoot(duck, this->getRect()))
 		{
+			checker = true;
 			duck.die();
 		}
 		if (Shoot(duck1, this->getRect()))
 		{
+			checker = true;
 			duck1.die();
 		}
 	}
+	return checker;
 }
 
 int Player::getScore() {
