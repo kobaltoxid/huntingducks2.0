@@ -1,12 +1,17 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "Engine.h"
 #include "exceptions/SDL_exception.h"
 #include <duck/Duck.h>
 #include <player/Player.h>
 #include <string>
 #include <map>
+#include <chrono>
+#include <thread>
+#include <sstream>
+#include <iomanip>
 #include <Windows.h>
 
 const int WIDTH = 1280, HEIGHT = 720;
@@ -28,9 +33,14 @@ std::string two_white_fenixes = "images/birds/two_white_birds.png";
 std::string two_red_fenixes = "images/birds/two_red_birds.png";
 std::string red_white_fenixes = "images/birds/red_white_bird.png";
 
+std::string one_white_fenix = "images/birds/white_bird.png";
+std::string one_red_fenix = "images/birds/red_bird.png";
+
 Duck duck1(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x, duck_pos_y);
 Duck duck2(DUCK_WIDTH, DUCK_HEIGHT, duck_pos_x - 100, duck_pos_y - 100);
 Player player;
+
+TTF_Font* Langar;
 
 SDL_Texture* duckTexture;
 SDL_Texture* menuTexture;
@@ -43,6 +53,8 @@ SDL_Texture* three_shell_texture;
 SDL_Texture* two_red_fenixes_texture;
 SDL_Texture* two_white_fenixes_texture;
 SDL_Texture* red_white_fenixes_texture;
+SDL_Texture* one_white_fenix_texture;
+SDL_Texture* one_red_fenix_texture;
 SDL_Rect* rect;
 SDL_Rect bgRect = { 0,0,1280,720 };
 SDL_Rect grassRect = { 0,497,1280,223 };
@@ -51,6 +63,10 @@ int ammoCount = 3;
 int shotFenixes = 0;
 int levelCount = 1;
 bool nextLevel = false;
+int score = 0000;
+
+clock_t start;
+bool timerRunning = false;
 
 std::map<int, int> shotFenixesOnLevel;
 
@@ -76,6 +92,13 @@ void Engine::Init() {
 	if (renderer == nullptr) {
 		throw SDL_exception("Could not create renderer!");
 	}
+
+	if (TTF_Init() < 0) {
+		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+	}
+
+	Langar = TTF_OpenFont("font/Langar-Regular.ttf", 25);
+	if (Langar == nullptr) std::cout << TTF_GetError() << std::endl;
 
 	running = true;
 	isGameStarted = false;
@@ -125,6 +148,14 @@ void Engine::Init() {
 	tmpSurface = IMG_Load(red_white_fenixes.c_str());
 	red_white_fenixes_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
+
+	tmpSurface = IMG_Load(one_white_fenix.c_str());
+	one_white_fenix_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
+
+	tmpSurface = IMG_Load(one_red_fenix.c_str());
+	one_red_fenix_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 }
 
 void Engine::Update() {
@@ -133,33 +164,48 @@ void Engine::Update() {
 		handleOnMenu();
 	}
 	else {
-		if (levelCount == 5) {
-			cleanupBetweenGames();
-			return;
-		}
-
 		SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
-		//renderFenixes();
-		
-
-		if (ammoCount == 0 || shotFenixes == 2) {
-			cleanupBetweenLevels();
-		}
 
 		if (gameA == true) {
-			if (shotFenixes == 1) duck1.spawn();
+			if (levelCount == 9) {
+				cleanupBetweenGames();
+				return;
+			}
+
+			if (ammoCount == 0 || shotFenixes == 1) {
+				timer();
+				if (shotFenixes == 0) duck1.flyAway();
+				cleanupBetweenLevels();
+			}
 
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
 			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
-
+			
 			handleInGameEvents();		
-			renderFenixes();
+			renderScore();
+			renderFenixesGameA();
 			renderAmmo();
 		}
 		else if (gameB == true) {
+			if (levelCount == 5) {
+				cleanupBetweenGames();
+				return;
+			}
+
+			if (ammoCount == 0 || shotFenixes == 2) {
+				timer();
+				if (shotFenixes == 0) { 
+					duck1.flyAway(); 
+					duck2.flyAway();
+				}
+				//gotta find a way of knowing which duck is alive (1 or 2)
+				else if (shotFenixes == 1) duck1.flyAway();
+				cleanupBetweenLevels();
+			}
+
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
@@ -172,7 +218,8 @@ void Engine::Update() {
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 			handleInGameEvents();
-			renderFenixes();
+			renderScore();
+			renderFenixesGameB();
 			renderAmmo();
 		}
 	}
@@ -211,13 +258,6 @@ void Engine::handleOnMenu() {
 		case SDLK_b:
 			gameB = true;
 			isGameStarted = true;
-		case SDLK_s:
-			duck1.spawn();
-			duck2.spawn();
-			break;
-		default:
-
-			break;
 		}
 	}
 	else if (event.type == SDL_QUIT) running = false;
@@ -228,7 +268,7 @@ void Engine::handleInGameEvents() {
 	SDL_PollEvent(&event);
 
 	if (player.eventHandler(event, duck1, duck2)) {
-		std::cout << levelCount << std::endl;
+		score += 1000;
 		shotFenixes++;
 		shotFenixesOnLevel[levelCount] = shotFenixesOnLevel[levelCount]++;
 	}
@@ -261,41 +301,91 @@ void Engine::renderAmmo() {
 	case 0:
 		SDL_RenderCopy(renderer, zero_shell_texture, nullptr, rect);
 		break;
-	}
-}
+	}}
 
-void Engine::renderFenixes() {
+
+void Engine::renderFenixesGameA() {
 	int level = 1;
 	int countOfShotFenixes = shotFenixesOnLevel[level];
 
-	renderFenixesOnXPos(395, countOfShotFenixes);
+	renderFenixesOnXPos(395, countOfShotFenixes, 'A');
 
 	level++;
 	countOfShotFenixes = shotFenixesOnLevel[level];
-	renderFenixesOnXPos(519, countOfShotFenixes);
+	renderFenixesOnXPos(457, countOfShotFenixes, 'A');
 
 	level++;
 	countOfShotFenixes = shotFenixesOnLevel[level];
-	renderFenixesOnXPos(643, countOfShotFenixes);
+	renderFenixesOnXPos(519, countOfShotFenixes, 'A');
 
 	level++;
 	countOfShotFenixes = shotFenixesOnLevel[level];
-	renderFenixesOnXPos(767, countOfShotFenixes);
+	renderFenixesOnXPos(581, countOfShotFenixes, 'A');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(643, countOfShotFenixes, 'A');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(705, countOfShotFenixes, 'A');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(767, countOfShotFenixes, 'A');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(829, countOfShotFenixes, 'A');
 }
 
-void Engine::renderFenixesOnXPos(int xPos, int count) {
-	SDL_Rect tempRect = { xPos,640,124,64 };
-	rect = &tempRect;
-	switch (count) {
-	case 0:
-		SDL_RenderCopy(renderer, two_white_fenixes_texture, nullptr, rect);
-		break;
-	case 1:
-		SDL_RenderCopy(renderer, red_white_fenixes_texture, nullptr, rect);
-		break;
-	case 2:
-		SDL_RenderCopy(renderer, two_red_fenixes_texture, nullptr, rect);
-		break;
+void Engine::renderFenixesGameB() {
+	int level = 1;
+	int countOfShotFenixes = shotFenixesOnLevel[level];
+
+	renderFenixesOnXPos(395, countOfShotFenixes, 'B');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(519, countOfShotFenixes, 'B');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(643, countOfShotFenixes, 'B');
+
+	level++;
+	countOfShotFenixes = shotFenixesOnLevel[level];
+	renderFenixesOnXPos(767, countOfShotFenixes, 'B');
+}
+
+void Engine::renderFenixesOnXPos(int xPos, int count, char game) {
+	if (game == 'A') {
+		SDL_Rect tempRect = { xPos,640,62,64 };
+		rect = &tempRect;
+		switch (count)
+		{
+		case 0:
+			SDL_RenderCopy(renderer, one_white_fenix_texture, nullptr, rect);
+			break;
+		case 1:
+			SDL_RenderCopy(renderer, one_red_fenix_texture, nullptr, rect);
+			break;
+		}
+	}
+	else if (game == 'B') {
+		SDL_Rect tempRect = { xPos,640,124,64 };
+		rect = &tempRect;
+		switch (count) {
+		case 0:
+			SDL_RenderCopy(renderer, two_white_fenixes_texture, nullptr, rect);
+			break;
+		case 1:
+			SDL_RenderCopy(renderer, red_white_fenixes_texture, nullptr, rect);
+			break;
+		case 2:
+			SDL_RenderCopy(renderer, two_red_fenixes_texture, nullptr, rect);
+			break;
+		}
 	}
 }
 
@@ -307,19 +397,18 @@ void Engine::cleanupBetweenGames() {
 }
 
 void Engine::cleanupBetweenLevels() {
-	// implement function where duck is instantly spawned
-	// on the highest Y pos (in the grass)
-	// 	   - die() doesn't do it;
-	// so a new level can be simulated before the fenixes spawn again
-	//duck1.die();
-	//duck2.die();
+	int duration = (clock() - start) / (double)CLOCKS_PER_SEC;
 
-	levelCount++;
-	ammoCount = 3;
-	shotFenixes = 0;
+	if (duration >= 2) {
+		levelCount++;
+		ammoCount = 3;
+		shotFenixes = 0;
 
-	duck1.spawn();
-	duck2.spawn();
+		duck1.spawn();
+		duck2.spawn();
+
+		timerRunning = false;
+	}
 }
 
 void Engine::clearFenixMap() {
@@ -327,4 +416,29 @@ void Engine::clearFenixMap() {
 	shotFenixesOnLevel[2] = 0;
 	shotFenixesOnLevel[3] = 0;
 	shotFenixesOnLevel[4] = 0;
+	shotFenixesOnLevel[5] = 0;
+	shotFenixesOnLevel[6] = 0;
+	shotFenixesOnLevel[7] = 0;
+	shotFenixesOnLevel[8] = 0;
 }
+
+void Engine::timer() {
+	if (!timerRunning) {
+		start = clock();
+		timerRunning = true;
+	}
+}
+
+void Engine::renderScore() {
+	std::stringstream ss;
+	ss << std::setw(4) << std::setfill('0') << score;
+	std::string s = ss.str();
+	
+	SDL_Surface* tempSurface = TTF_RenderText_Solid(Langar, s.c_str(), {255,255,255});
+	SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	if (!tempSurface) std::cout << TTF_GetError() << std::endl;
+	SDL_Rect tempRect = { 1110, 640 , 110, 70 };
+	SDL_RenderCopy(renderer, tempTexture, nullptr, &tempRect);
+	SDL_FreeSurface(tempSurface);
+	SDL_DestroyTexture(tempTexture);
+}	
