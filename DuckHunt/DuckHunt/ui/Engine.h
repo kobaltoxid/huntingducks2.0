@@ -34,12 +34,14 @@ public:
 	void handleInGameEvents();
 	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
 	void renderAmmo();
-	void renderFenixesOnXPos(int xPos, int count);
-	void renderFenixes();
+	void renderFenixesOnXPos(int xPos, int count, char game);
+	void renderFenixesGameB();
+	void renderFenixesGameA();
 	void renderScore();
 	void clearFenixMap();
 	void cleanupBetweenGames();
 	void cleanupBetweenLevels();
+	void timer();
 };
 
 
