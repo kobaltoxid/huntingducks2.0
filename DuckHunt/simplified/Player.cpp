@@ -2,7 +2,7 @@
 #include <bridge.h>
 #include <Duck.h>
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 
 Player::Player() {

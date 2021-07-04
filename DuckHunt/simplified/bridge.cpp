@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 
 bool Collision(SDL_Rect* duck, SDL_Rect* scope) {

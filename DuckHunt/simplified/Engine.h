@@ -3,7 +3,7 @@
 
 #include <Duck.h>
 #include <string>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <map>
 
 class Engine {
@@ -25,7 +25,7 @@ public:
 		return engine;
 	}
 
-	void Init();
+	bool Init();
 	void Update();	
 	bool isRunning();
 	void Clean();
