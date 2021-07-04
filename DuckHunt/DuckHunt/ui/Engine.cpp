@@ -1,11 +1,11 @@
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "Engine.h"
-#include "exceptions/SDL_exception.h"
-#include <duck/Duck.h>
-#include <player/Player.h>
+#include "SDL_exception.h"
+#include <Duck.h>
+#include <Player.h>
 #include <string>
 #include <map>
 #include <chrono>
@@ -176,11 +176,12 @@ void Engine::Update()
 		{
 			if (levelCount == 9)
 			{
+				std::cout << "Whoopsie" << std::endl;
 				cleanupBetweenGames();
 				return;
 			}
 
-			if (ammoCount == 0 || shotFenixes == 1)
+			if (ammoCount <= 0 || shotFenixes == 1)
 			{
 				timer();
 				if (shotFenixes == 0)
@@ -207,7 +208,7 @@ void Engine::Update()
 				return;
 			}
 
-			if (ammoCount == 0 || shotFenixes == 2)
+			if (ammoCount <= 0 || shotFenixes == 2)
 			{
 				timer();
 				if (shotFenixes == 0)
@@ -217,7 +218,16 @@ void Engine::Update()
 				}
 				//gotta find a way of knowing which duck is alive (1 or 2)
 				else if (shotFenixes == 1)
-					duck1.flyAway();
+				{
+					if (duck1.isAlive())
+					{
+						duck1.flyAway();
+					}
+					else if (duck2.isAlive())
+					{
+						duck2.flyAway();
+					}
+				}
 				cleanupBetweenLevels();
 			}
 
@@ -365,6 +375,7 @@ void Engine::renderFenixesGameA()
 	level++;
 	countOfShotFenixes = shotFenixesOnLevel[level];
 	renderFenixesOnXPos(829, countOfShotFenixes, 'A');
+	std::cout << level << std::endl;
 }
 
 void Engine::renderFenixesGameB()
