@@ -4,35 +4,45 @@
 #include <Duck.h>
 #include <string>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include <map>
 
-class Engine {
+class Engine
+{
 private:
 	Engine() {}
 	~Engine();
 
-	static Engine* engine;
+	static Engine *engine;
 
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	Mix_Music *imusic = NULL;
+	Mix_Chunk *gunshot = NULL;
+	Mix_Chunk *gunshot_empty = NULL;
+	Mix_Chunk *bird_dead = NULL;
+	Mix_Chunk *fly_away = NULL;
+	Mix_Chunk *fly_in = NULL;
 
 	bool running;
 	bool isGameStarted;
 	bool gameA = false, gameB = false;
+
 public:
-	static Engine* getEngine() {
+	static Engine *getEngine()
+	{
 		engine = (engine == nullptr) ? new Engine() : engine;
 		return engine;
 	}
 
 	void Init();
-	void Update();	
+	void Update();
 	bool isRunning();
 	void Clean();
 	void Render();
 	void handleOnMenu();
 	void handleInGameEvents();
-	void spawnDuck(SDL_Rect* rect, SDL_Renderer* renderer);
+	void spawnDuck(SDL_Rect *rect, SDL_Renderer *renderer);
 	void renderAmmo();
 	void renderFenixesOnXPos(int xPos, int count, char game);
 	void renderFenixesGameB();
@@ -44,6 +54,4 @@ public:
 	void timer();
 };
 
-
 #endif //ENGINE_H
-
