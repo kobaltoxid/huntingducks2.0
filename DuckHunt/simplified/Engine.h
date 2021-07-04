@@ -25,7 +25,7 @@ public:
 		return engine;
 	}
 
-	bool Init();
+	void Init();
 	void Update();	
 	bool isRunning();
 	void Clean();

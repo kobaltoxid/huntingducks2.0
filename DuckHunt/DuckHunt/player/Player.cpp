@@ -14,13 +14,18 @@ Player::~Player() {
 }
 
 bool Player::Shoot(Duck &duck, SDL_Rect* scope) {
-	if (Collision(duck.getRect(), scope)) {
-		std::cout << "shot" << std::endl;
-		return true;
-	}
-	else {
+	if (duck.isAlive())
+		if (Collision(duck.getRect(), scope))
+		{
+			std::cout << "shot" << std::endl;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	else
 		return false;
-	}
 }
 
 bool Player::eventHandler(SDL_Event& event, Duck &duck, Duck& duck1) {
