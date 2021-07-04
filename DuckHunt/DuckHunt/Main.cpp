@@ -24,11 +24,12 @@ int main(int argc, char *argv[])
 	}
 
 #ifdef __EMSCRIPTEN__
-	emscripten_set_main_loop(main_loop, 0, 1);
+		emscripten_set_main_loop(main_loop, 0, 1);
+		//emscripten_set_main_loop_timing(EM_TIMING_RAF, 1);
 #endif
 #ifndef __EMSCRIPTEN__
-	while (Engine::getEngine()->isRunning())
-		main_loop();
+		while (Engine::getEngine()->isRunning())
+			main_loop();
 #endif
 
 #ifdef __EMSCRIPTEN__
