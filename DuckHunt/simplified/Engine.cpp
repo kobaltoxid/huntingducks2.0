@@ -181,7 +181,7 @@ void Engine::Update()
 				return;
 			}
 
-			if (ammoCount == 0 || shotFenixes == 1)
+			if (ammoCount <= 0 || shotFenixes == 1)
 			{
 				timer();
 				if (shotFenixes == 0)
@@ -208,7 +208,7 @@ void Engine::Update()
 				return;
 			}
 
-			if (ammoCount == 0 || shotFenixes == 2)
+			if (ammoCount <= 0 || shotFenixes == 2)
 			{
 				timer();
 				if (shotFenixes == 0)
@@ -218,7 +218,16 @@ void Engine::Update()
 				}
 				//gotta find a way of knowing which duck is alive (1 or 2)
 				else if (shotFenixes == 1)
-					duck1.flyAway();
+				{
+					if (duck1.isAlive())
+					{
+						duck1.flyAway();
+					}
+					else if (duck2.isAlive())
+					{
+						duck2.flyAway();
+					}
+				}
 				cleanupBetweenLevels();
 			}
 
