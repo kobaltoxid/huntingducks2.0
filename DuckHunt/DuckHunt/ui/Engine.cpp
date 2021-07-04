@@ -12,7 +12,7 @@
 #include <thread>
 #include <sstream>
 #include <iomanip>
-#include <Windows.h>
+//#include <Windows.h>
 
 const int WIDTH = 1280, HEIGHT = 720;
 const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;

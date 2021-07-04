@@ -2,7 +2,7 @@
 #ifndef DUCK_H
 #define DUCK_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 
 class Duck {

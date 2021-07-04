@@ -1,7 +1,7 @@
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "Engine.h"
 #include "SDL_exception.h"
 #include <Duck.h>
@@ -71,26 +71,42 @@ bool timerRunning = false;
 std::map<int, int> shotFenixesOnLevel;
 
 Engine* Engine::engine = nullptr;
-void Engine::Init() {
+bool Engine::Init() {
 
 	SDL_Surface* windowSurface = NULL;
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	/* if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		throw SDL_exception("SDL could not initialize!");
+	} */
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0)
+	{
+		std::cout << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
+		return false;
 	}
 
 	window = SDL_CreateWindow("Hunting Ducks 2.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 	windowSurface = SDL_GetWindowSurface(window);
 
-	if (window == nullptr)
+	/* if (window == nullptr)
 	{
 		throw SDL_exception("Could not create window!");
+	} */
+
+	if (window == nullptr)
+	{
+		std::cout << "Could not create window: " << SDL_GetError() << std::endl;
+		return false;
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == nullptr) {
+	/* if (renderer == nullptr) {
 		throw SDL_exception("Could not create renderer!");
+	} */
+
+	if (renderer == nullptr) {
+		std::cout << "Could not init renderer: " << SDL_GetError() << std::endl;
+		return false;
 	}
 
 	if (TTF_Init() < 0) {
@@ -156,6 +172,9 @@ void Engine::Init() {
 	tmpSurface = IMG_Load(one_red_fenix.c_str());
 	one_red_fenix_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
+
+	running = true;
+	return running;
 }
 
 void Engine::Update() {
@@ -337,6 +356,7 @@ void Engine::renderFenixesGameA() {
 	level++;
 	countOfShotFenixes = shotFenixesOnLevel[level];
 	renderFenixesOnXPos(829, countOfShotFenixes, 'A');
+	std::cout << level << std::endl; 
 }
 
 void Engine::renderFenixesGameB() {

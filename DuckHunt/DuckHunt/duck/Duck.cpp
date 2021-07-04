@@ -5,7 +5,7 @@
 #include <stdlib.h> 
 #include <iostream>
 #include <string>
-#include<windows.h>
+//#include<windows.h>
 
 Duck::Duck(int w, int h, int x, int y): 
 	_w(w), _h(h), _x(x), _y(y)
