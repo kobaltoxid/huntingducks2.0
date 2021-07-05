@@ -2,7 +2,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include <duck/Duck.h>
 
 class Player {
@@ -19,7 +20,7 @@ public:
 	Player();
 	~Player();
 	bool Shoot(Duck &duck, SDL_Rect* scope);
-	bool eventHandler(SDL_Event& event, Duck &duck, Duck& duck1, int &shotCount, int &score);
+	bool eventHandler(SDL_Event& event, Duck &duck, Duck& duck1, int &shotCount, int &score, Mix_Chunk *ded);
 	int getScore();
 	int getCurX();
 	int getCurY();
