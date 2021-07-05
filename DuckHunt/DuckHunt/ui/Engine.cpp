@@ -2,10 +2,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "Engine.h"
-#include "SDL_exception.h"
-#include <Duck.h>
-#include <Player.h>
+#include <SDL2/SDL_mixer.h>
+#include "ui/Engine.h"
+#include "exceptions/SDL_exception.h"
+#include <duck/Duck.h>
+#include <player/Player.h>
 #include <string>
 #include <map>
 #include <chrono>
@@ -75,7 +76,7 @@ void Engine::Init()
 
 	SDL_Surface *windowSurface = NULL;
 
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0)
 	{
 		throw SDL_exception("SDL could not initialize!");
 	}
@@ -94,6 +95,11 @@ void Engine::Init()
 		throw SDL_exception("Could not create renderer!");
 	}
 
+	if (Mix_OpenAudio(44100, AUDIO_F32MSB, 2, 2048) < 0)
+	{
+		std::cout << ("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+
 	if (TTF_Init() < 0)
 	{
 		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
@@ -105,6 +111,39 @@ void Engine::Init()
 
 	running = true;
 	isGameStarted = false;
+
+	imusic = Mix_LoadMUS("sounds/Intro_music.wav");
+	if (imusic == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+	gunshot = Mix_LoadWAV("sounds/gun_fire_bullet.wav");
+	if (gunshot == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+	gunshot_empty = Mix_LoadWAV("sounds/gun_fire_empty.wav");
+	if (gunshot_empty == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+	bird_dead = Mix_LoadWAV("sounds/level_birddeath_sound.wav");
+	if (bird_dead == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+	Mix_VolumeChunk(bird_dead, MIX_MAX_VOLUME / 8);
+	fly_away = Mix_LoadWAV("sounds/lostgame_music.wav");
+	if (fly_away == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
+	Mix_VolumeChunk(fly_away, MIX_MAX_VOLUME / 4);
+	fly_in = Mix_LoadWAV("sounds/bird_emerging_sound.wav");
+	if (fly_in == NULL)
+	{
+		std::cout << ("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError()) << std::endl;
+	}
 
 	clearFenixMap();
 
@@ -165,11 +204,18 @@ void Engine::Update()
 {
 	if (isGameStarted == false)
 	{
+		if (Mix_PlayingMusic() == 0)
+		{
+			//Play intro music
+			Mix_PlayMusic(imusic, -1);
+		}
 		SDL_RenderCopy(renderer, menuTexture, nullptr, &bgRect);
 		handleOnMenu();
 	}
 	else
 	{
+		Mix_FreeMusic(imusic);
+		imusic = NULL;
 		SDL_RenderCopy(renderer, backgroundTexture, nullptr, &bgRect);
 
 		if (gameA == true)
@@ -185,10 +231,13 @@ void Engine::Update()
 			{
 				timer();
 				if (shotFenixes == 0)
+				{
+					Mix_PlayChannel(-1, fly_away, 0);
 					duck1.flyAway();
+				}
 				cleanupBetweenLevels();
 			}
-
+			//Mix_PlayChannel( -1, fly_in, 0 );
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
@@ -213,6 +262,7 @@ void Engine::Update()
 				timer();
 				if (shotFenixes == 0)
 				{
+					Mix_PlayChannel(-1, fly_away, 0);
 					duck1.flyAway();
 					duck2.flyAway();
 				}
@@ -221,21 +271,24 @@ void Engine::Update()
 				{
 					if (duck1.isAlive())
 					{
+						Mix_PlayChannel(-1, fly_away, 0);
 						duck1.flyAway();
 					}
 					else if (duck2.isAlive())
 					{
+						Mix_PlayChannel(-1, fly_away, 0);
 						duck2.flyAway();
 					}
 				}
 				cleanupBetweenLevels();
 			}
-
+			//Mix_PlayChannel( -1, fly_in, 0 );
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
 			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
+			//Mix_PlayChannel( -1, fly_in, 0 );
 			srand((unsigned)(time(0) + 47));
 			duck2.move();
 			rect = duck2.getRect();
@@ -297,7 +350,7 @@ void Engine::handleInGameEvents()
 	SDL_Event event;
 	SDL_PollEvent(&event);
 
-	if (player.eventHandler(event, duck1, duck2, shotFenixes, score))
+	if (player.eventHandler(event, duck1, duck2, shotFenixes, score, bird_dead))
 	{
 		if (shotFenixes < 2)
 			shotFenixesOnLevel[levelCount] = shotFenixesOnLevel[levelCount] + 1;
@@ -314,6 +367,14 @@ void Engine::handleInGameEvents()
 	case SDL_MOUSEBUTTONDOWN:
 		if (event.button.button == SDL_BUTTON_LEFT)
 		{
+			if (ammoCount > 0)
+			{
+				Mix_PlayChannel(-1, gunshot, 0);
+			}
+			else
+			{
+				Mix_PlayChannel(-1, gunshot_empty, 0);
+			}
 			ammoCount--;
 		}
 		break;
@@ -451,6 +512,7 @@ void Engine::cleanupBetweenLevels()
 		ammoCount = 3;
 		shotFenixes = 0;
 
+		Mix_PlayChannel(-1, fly_in, 0);
 		duck1.spawn();
 		duck2.spawn();
 
