@@ -13,6 +13,7 @@ Duck::Duck(int w, int h, int x, int y):
 	img = { _x, _y, _w, _h };
 	alive = true;
 	free = false;
+	flipped = false;
 }
 
 Duck::~Duck() {
@@ -22,10 +23,14 @@ Duck::~Duck() {
 
 void Duck::move() {
 	if (free && _y < 1000) {
-		if (_x > 640)
+		if (_x > 640) {
 			_x += 5;
-		else
+			flipped = true;
+		}
+		else {
 			_x -= 5;
+			flipped = false;
+		}
 		_y -= 5;
 		img = { _x, _y, _w, _h };
 	}else if (alive) {
@@ -45,16 +50,21 @@ void Duck::move() {
 			if (_x + distance < 1180 && _y - distance > 0) {
 				_x += distance;
 				_y -= distance;
+				flipped = true;
 			}
 			break;
 		case 3:
 			if (_x + distance < 1180)
+			{
 				_x += distance;
+				flipped = true;
+			}
 			break;
 		case 4:
 			if (_x + distance < 1180 && _y + distance < 450) {
 				_x += distance;
 				_y += distance;
+				flipped = true;
 			}
 			break;
 		case 5:
@@ -65,16 +75,20 @@ void Duck::move() {
 			if (_x - distance > 0 && _y + distance < 450) {
 				_x -= distance;
 				_y += distance;
+				flipped = false;
 			}
 			break;
 		case 7:
-			if (_x - distance > 0)
+			if (_x - distance > 0) {
 				_x -= distance;
+				flipped = false;
+			}
 			break;
 		case 8:
 			if (_x - distance > 0 && _y - distance > 0) {
 				_x -= distance;
 				_y -= distance;
+				flipped = false;
 			}
 			break;
 		}
@@ -99,6 +113,10 @@ int Duck::getY() {
 
 bool Duck::isAlive(){
 	return alive;
+}
+
+bool Duck::isFlipped() {
+	return flipped;
 }
 
 bool Duck::die() {
