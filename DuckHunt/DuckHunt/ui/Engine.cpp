@@ -1,8 +1,8 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include "ui/Engine.h"
 #include "exceptions/SDL_exception.h"
 #include <duck/Duck.h>
@@ -241,7 +241,13 @@ void Engine::Update()
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
-			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+
+			if (duck1.isFlipped())
+				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+			else
+				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 			handleInGameEvents();
@@ -286,13 +292,23 @@ void Engine::Update()
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
-			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+			if (duck1.isFlipped())
+				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+			else
+				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
 
 			//Mix_PlayChannel( -1, fly_in, 0 );
 			srand((unsigned)(time(0) + 47));
 			duck2.move();
 			rect = duck2.getRect();
-			SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+			if (duck2.isFlipped())
+				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+			else
+				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+
+
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
 			handleInGameEvents();

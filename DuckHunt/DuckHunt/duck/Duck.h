@@ -14,13 +14,14 @@ public:
 	bool spawn();
 	bool isAlive();
 	bool flyAway();
+	bool isFlipped();
 	void move();
 	int getX();
 	int getY();
 	SDL_Rect *getRect();
 
 private:
-	bool alive, free;
+	bool alive, free, flipped;
 	int _w, _h;
 	int _x, _y;
 	SDL_Rect img;
