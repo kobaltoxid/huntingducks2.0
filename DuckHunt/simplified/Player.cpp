@@ -29,7 +29,7 @@ bool Player::Shoot(Duck &duck, SDL_Rect *scope)
 		return false;
 }
 
-bool Player::eventHandler(SDL_Event &event, Duck &duck, Duck &duck1, int &shotCount, int &score)
+bool Player::eventHandler(SDL_Event &event, Duck &duck, Duck &duck1, int &shotCount, int &score, Mix_Chunk *ded)
 {
 	bool checker = false;
 	if (event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_GetMouseState(&curX, &curY)) == SDL_BUTTON_LEFT)
@@ -38,6 +38,7 @@ bool Player::eventHandler(SDL_Event &event, Duck &duck, Duck &duck1, int &shotCo
 		this->gBox.y = curY;
 		if (Shoot(duck, this->getRect()))
 		{
+			Mix_PlayChannel(-1, ded, 0);
 			checker = true;
 			duck.die();
 			shotCount++;
@@ -45,6 +46,7 @@ bool Player::eventHandler(SDL_Event &event, Duck &duck, Duck &duck1, int &shotCo
 		}
 		if (Shoot(duck1, this->getRect()))
 		{
+			Mix_PlayChannel(-1, ded, 0);
 			checker = true;
 			duck1.die();
 			shotCount++;
