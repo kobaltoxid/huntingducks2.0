@@ -19,7 +19,7 @@ const int WIDTH = 1280, HEIGHT = 720;
 const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
 
-std::string duck_img_path = "images/birds/fenix_up.png";
+std::string duck_img_path = "images/birds/fenix.png";
 std::string menu = "images/menu/menu.png";
 std::string background_img_path = "images/menu/background.png";
 std::string foreground_img_path = "images/menu/foreground.png";
@@ -58,6 +58,8 @@ SDL_Texture *one_red_fenix_texture;
 SDL_Rect *rect;
 SDL_Rect bgRect = {0, 0, 1280, 720};
 SDL_Rect grassRect = {0, 497, 1280, 223};
+
+SDL_Rect duckFrame;
 
 int ammoCount = 3;
 int shotFenixes = 0;
@@ -241,12 +243,19 @@ void Engine::Update()
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
+			
+			int x = 0;
 
+			Uint32 ticks = SDL_GetTicks();
+			Uint32 seconds = ticks / 50;
+			x = seconds % 11;
+
+			duckFrame = { x * 500  , 0, 500 , 500 };
 
 			if (duck1.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
-				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
 
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
 
@@ -293,10 +302,18 @@ void Engine::Update()
 			duck1.move();
 			rect = duck1.getRect();
 
+			int x = 0;
+
+			Uint32 ticks = SDL_GetTicks();
+			Uint32 seconds = ticks / 50;
+			x = seconds % 11;
+
+			duckFrame = { x* 500  , 0, 500 , 500 };
+
 			if (duck1.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
-				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
 
 			//Mix_PlayChannel( -1, fly_in, 0 );
 			srand((unsigned)(time(0) + 47));
@@ -304,9 +321,9 @@ void Engine::Update()
 			rect = duck2.getRect();
 
 			if (duck2.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture, nullptr, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
-				SDL_RenderCopy(renderer, duckTexture, nullptr, rect);
+				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
 
 
 			SDL_RenderCopy(renderer, grassTexture, nullptr, &grassRect);
