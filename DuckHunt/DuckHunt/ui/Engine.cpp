@@ -20,6 +20,7 @@ const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
 
 std::string duck_img_path = "images/birds/fenix.png";
+std::string duck_die_img_path = "images/birds/fenix_fall.png";
 std::string menu = "images/menu/menu.png";
 std::string background_img_path = "images/menu/background.png";
 std::string foreground_img_path = "images/menu/foreground.png";
@@ -43,6 +44,7 @@ Player player;
 TTF_Font *Langar;
 
 SDL_Texture *duckTexture;
+SDL_Texture *deadDuckTexture;
 SDL_Texture *menuTexture;
 SDL_Texture *grassTexture;
 SDL_Texture *backgroundTexture;
@@ -161,6 +163,10 @@ void Engine::Init()
 	duckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 
+	tmpSurface = IMG_Load(duck_die_img_path.c_str());
+	deadDuckTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
+
 	tmpSurface = IMG_Load(menu.c_str());
 	menuTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
@@ -252,7 +258,10 @@ void Engine::Update()
 
 			duckFrame = { x * 500  , 0, 500 , 500 };
 
-			if (duck1.isFlipped())
+			if (!duck1.isAlive()) {
+				SDL_RenderCopy(renderer, deadDuckTexture, NULL, rect);
+			}
+			else if (duck1.isFlipped())
 				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
 				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
@@ -309,8 +318,9 @@ void Engine::Update()
 			x = seconds % 11;
 
 			duckFrame = { x* 500  , 0, 500 , 500 };
-
-			if (duck1.isFlipped())
+			if (!duck1.isAlive()) {
+				SDL_RenderCopy(renderer, deadDuckTexture, NULL, rect);
+			}else if (duck1.isFlipped())
 				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
 				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
@@ -320,7 +330,10 @@ void Engine::Update()
 			duck2.move();
 			rect = duck2.getRect();
 
-			if (duck2.isFlipped())
+			if (!duck2.isAlive()) {
+				SDL_RenderCopy(renderer, deadDuckTexture, NULL, rect);
+			}
+			else if (duck2.isFlipped())
 				SDL_RenderCopyEx(renderer, duckTexture, &duckFrame, rect, 0, NULL, SDL_FLIP_HORIZONTAL);
 			else
 				SDL_RenderCopy(renderer, duckTexture, &duckFrame, rect);
