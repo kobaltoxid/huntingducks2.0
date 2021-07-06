@@ -33,7 +33,7 @@ void Duck::move() {
 		}
 		_y -= 5;
 		img = { _x, _y, _w, _h };
-	}else if (alive) {
+	}else if (alive && !free) {
 		if (_y >= 450) {
 			_y -= 4;
 		}
@@ -130,7 +130,6 @@ bool Duck::die() {
 bool Duck::flyAway() {
 
 	free = true;
-	alive = false;
 
 	return free;
 }
