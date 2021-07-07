@@ -20,7 +20,7 @@ const int DUCK_WIDTH = 100, DUCK_HEIGHT = 100;
 int duck_pos_x = 350, duck_pos_y = 350;
 
 std::string duck_img_path = "images/birds/fenix.png";
-std::string duck_die_img_path = "images/birds/fenix_fall.png";
+std::string duck_die_img_path = "images/birds/phoenix_dead.png";
 std::string menu = "images/menu/menu.png";
 std::string background_img_path = "images/menu/background.png";
 std::string foreground_img_path = "images/menu/foreground.png";
