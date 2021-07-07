@@ -1,8 +1,8 @@
 #include <Player.h>
 #include <bridge.h>
 #include <Duck.h>
-
 #include <SDL2/SDL.h>
+#include <SDL_mixer.h>
 #include <iostream>
 
 Player::Player()

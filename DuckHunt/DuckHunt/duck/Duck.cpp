@@ -83,6 +83,7 @@ void Duck::move()
 			{
 				_x -= distance;
 				_y += distance;
+				flipped = false;
 			}
 			break;
 		case 7:
@@ -134,20 +135,19 @@ bool Duck::isAlive()
 	return alive;
 }
 
-bool Duck::die()
+bool Duck::isFlipped() {
+	return flipped;
+}
+
+bool Duck::die() 
 {
-
 	alive = false;
-
 	return alive;
 }
 
 bool Duck::flyAway()
 {
-
 	free = true;
-	//alive = false;
-
 	return free;
 }
 

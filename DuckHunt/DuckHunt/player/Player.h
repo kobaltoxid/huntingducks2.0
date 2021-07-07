@@ -1,10 +1,9 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <Duck.h>
+#include <SDL.h>
+#include <SDL_mixer.h>
+#include <duck/Duck.h>
 
 class Player {
 private:

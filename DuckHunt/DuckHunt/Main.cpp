@@ -2,7 +2,7 @@
 #include <emscripten.h>
 #endif
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "exceptions/SDL_exception.h"
 #include "ui/Engine.h"
 
