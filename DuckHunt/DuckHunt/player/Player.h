@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-#include <duck/Duck.h>
+#include <Duck.h>
 
 class Player {
 private:
