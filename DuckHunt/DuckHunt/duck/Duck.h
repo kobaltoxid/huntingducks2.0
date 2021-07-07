@@ -2,7 +2,7 @@
 #ifndef DUCK_H
 #define DUCK_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 
 class Duck {
@@ -14,6 +14,7 @@ public:
 	bool spawn();
 	bool isAlive();
 	bool flyAway();
+	bool flown();
 	bool isFlipped();
 	void move();
 	int getX();
