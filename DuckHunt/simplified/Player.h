@@ -11,7 +11,6 @@ private:
 	static Player* player;
 	bool alive = 1;
 	SDL_Rect gBox;
-	int gWidth, gHeight = 40;
 	int curX = 0;
 	int curY = 0;
 	int Score = 0;
