@@ -1,9 +1,8 @@
-#include <player/Player.h>
-#include <bridge/bridge.h>
-#include <duck/Duck.h>
+#include <Player.h>
+#include <bridge.h>
+#include <Duck.h>
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
 #include <iostream>
 
 Player::Player()
@@ -16,7 +15,7 @@ Player::~Player()
 
 bool Player::Shoot(Duck &duck, SDL_Rect *scope)
 {
-	if (duck.isAlive())
+	if (duck.isAlive() && !duck.flown())
 		if (Collision(duck.getRect(), scope))
 		{
 			std::cout << "shot" << std::endl;
