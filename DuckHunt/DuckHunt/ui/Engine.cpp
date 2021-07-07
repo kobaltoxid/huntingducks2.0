@@ -1,12 +1,12 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
-#include "Engine.h"
-#include "SDL_exception.h"
-#include <Duck.h>
-#include <Player.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
+#include "ui/Engine.h"
+#include "exceptions/SDL_exception.h"
+#include <duck/Duck.h>
+#include <player/Player.h>
 #include <string>
 #include <map>
 #include <chrono>
@@ -22,6 +22,7 @@ int duck_pos_x = 350, duck_pos_y = 350;
 std::string duck_img_path = "images/birds/fenix_up.png";
 std::string duck_img_path1 = "images/birds/Fenix.png";
 std::string duck_die_img_path = "images/birds/fenix_fall.png";
+
 std::string menu = "images/menu/menu.png";
 std::string background_img_path = "images/menu/background.png";
 std::string foreground_img_path = "images/menu/foreground.png";
@@ -325,7 +326,6 @@ void Engine::Update()
 			duck1.move();
 			rect = duck1.getRect();
 			
-
 			if (duck1.isAlive())
 				SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
 			else if (duck1.isAlive() && duck1.isFlipped())
