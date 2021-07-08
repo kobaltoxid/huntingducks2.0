@@ -193,7 +193,7 @@ Module['FS_createPath']("/", "sounds", true, true);
     }
   
    }
-   loadPackage({"files": [{"filename": "/images/birds/red_bird.png", "start": 0, "end": 4531, "audio": 0}, {"filename": "/images/birds/Fenix_only_2.png", "start": 4531, "end": 602385, "audio": 0}, {"filename": "/images/birds/two_red_birds.png", "start": 602385, "end": 609470, "audio": 0}, {"filename": "/images/birds/Fenix.png", "start": 609470, "end": 867588, "audio": 0}, {"filename": "/images/birds/phoenix_dead.png", "start": 867588, "end": 870508, "audio": 0}, {"filename": "/images/birds/red_white_bird.png", "start": 870508, "end": 877868, "audio": 0}, {"filename": "/images/birds/two_white_birds.png", "start": 877868, "end": 885275, "audio": 0}, {"filename": "/images/birds/white_bird.png", "start": 885275, "end": 890152, "audio": 0}, {"filename": "/images/birds/fenix_down.png", "start": 890152, "end": 1188471, "audio": 0}, {"filename": "/images/birds/fenix_up.png", "start": 1188471, "end": 1588990, "audio": 0}, {"filename": "/images/birds/fenix_fall.png", "start": 1588990, "end": 1674763, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_8.png", "start": 1674763, "end": 1734230, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_5.png", "start": 1734230, "end": 1799140, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_2.png", "start": 1799140, "end": 1871540, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_4.png", "start": 1871540, "end": 1937588, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_9.png", "start": 1937588, "end": 1995668, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_10.png", "start": 1995668, "end": 2053041, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_7.png", "start": 2053041, "end": 2115039, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_1.png", "start": 2115039, "end": 2189064, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_6.png", "start": 2189064, "end": 2252873, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_3.png", "start": 2252873, "end": 2321641, "audio": 0}, {"filename": "/images/menu/background.png", "start": 2321641, "end": 3174250, "audio": 0}, {"filename": "/images/menu/menu.png", "start": 3174250, "end": 4031116, "audio": 0}, {"filename": "/images/menu/foreground.png", "start": 4031116, "end": 4395023, "audio": 0}, {"filename": "/images/ammo/2_shells.png", "start": 4395023, "end": 4399476, "audio": 0}, {"filename": "/images/ammo/3_shells.png", "start": 4399476, "end": 4404021, "audio": 0}, {"filename": "/images/ammo/1_shell.png", "start": 4404021, "end": 4408388, "audio": 0}, {"filename": "/images/ammo/0_shells.png", "start": 4408388, "end": 4410184, "audio": 0}, {"filename": "/font/Langar-Regular.ttf", "start": 4410184, "end": 4597900, "audio": 0}, {"filename": "/sounds/bird_emerging_sound.wav", "start": 4597900, "end": 4851604, "audio": 1}, {"filename": "/sounds/gun_fire_bullet.wav", "start": 4851604, "end": 4980506, "audio": 1}, {"filename": "/sounds/lostgame_music.wav", "start": 4980506, "end": 5574024, "audio": 1}, {"filename": "/sounds/menu_buttonclick.wav", "start": 5574024, "end": 5752790, "audio": 1}, {"filename": "/sounds/Intro_music.wav", "start": 5752790, "end": 8287428, "audio": 1}, {"filename": "/sounds/gun_fire_empty.wav", "start": 8287428, "end": 8398998, "audio": 1}, {"filename": "/sounds/level_birddeath_sound.wav", "start": 8398998, "end": 8773596, "audio": 1}], "remote_package_size": 8773596, "package_uuid": "590f95f9-24fd-4d2c-94a0-aa568dae6dc2"});
+   loadPackage({"files": [{"filename": "/images/birds/red_bird.png", "start": 0, "end": 4531, "audio": 0}, {"filename": "/images/birds/Fenix_only_2.png", "start": 4531, "end": 602385, "audio": 0}, {"filename": "/images/birds/two_red_birds.png", "start": 602385, "end": 609470, "audio": 0}, {"filename": "/images/birds/Fenix.png", "start": 609470, "end": 867588, "audio": 0}, {"filename": "/images/birds/phoenix_dead.png", "start": 867588, "end": 870508, "audio": 0}, {"filename": "/images/birds/red_white_bird.png", "start": 870508, "end": 877868, "audio": 0}, {"filename": "/images/birds/two_white_birds.png", "start": 877868, "end": 885275, "audio": 0}, {"filename": "/images/birds/white_bird.png", "start": 885275, "end": 890152, "audio": 0}, {"filename": "/images/birds/fenix_down.png", "start": 890152, "end": 1188471, "audio": 0}, {"filename": "/images/birds/fenix_up.png", "start": 1188471, "end": 1588990, "audio": 0}, {"filename": "/images/birds/fenix_fall.png", "start": 1588990, "end": 1674763, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_8.png", "start": 1674763, "end": 1734230, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_5.png", "start": 1734230, "end": 1799140, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_2.png", "start": 1799140, "end": 1871540, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_4.png", "start": 1871540, "end": 1937588, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_9.png", "start": 1937588, "end": 1995668, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_10.png", "start": 1995668, "end": 2053041, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_7.png", "start": 2053041, "end": 2115039, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_1.png", "start": 2115039, "end": 2189064, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_6.png", "start": 2189064, "end": 2252873, "audio": 0}, {"filename": "/images/birds/Phoenix_animation/Feniks_3.png", "start": 2252873, "end": 2321641, "audio": 0}, {"filename": "/images/menu/background.png", "start": 2321641, "end": 3174250, "audio": 0}, {"filename": "/images/menu/menu.png", "start": 3174250, "end": 4031116, "audio": 0}, {"filename": "/images/menu/foreground.png", "start": 4031116, "end": 4395023, "audio": 0}, {"filename": "/images/ammo/2_shells.png", "start": 4395023, "end": 4399476, "audio": 0}, {"filename": "/images/ammo/3_shells.png", "start": 4399476, "end": 4404021, "audio": 0}, {"filename": "/images/ammo/1_shell.png", "start": 4404021, "end": 4408388, "audio": 0}, {"filename": "/images/ammo/0_shells.png", "start": 4408388, "end": 4410184, "audio": 0}, {"filename": "/font/Langar-Regular.ttf", "start": 4410184, "end": 4597900, "audio": 0}, {"filename": "/sounds/bird_emerging_sound.wav", "start": 4597900, "end": 4851604, "audio": 1}, {"filename": "/sounds/gun_fire_bullet.wav", "start": 4851604, "end": 4980506, "audio": 1}, {"filename": "/sounds/lostgame_music.wav", "start": 4980506, "end": 5574024, "audio": 1}, {"filename": "/sounds/menu_buttonclick.wav", "start": 5574024, "end": 5752790, "audio": 1}, {"filename": "/sounds/Intro_music.wav", "start": 5752790, "end": 8287428, "audio": 1}, {"filename": "/sounds/gun_fire_empty.wav", "start": 8287428, "end": 8398998, "audio": 1}, {"filename": "/sounds/level_birddeath_sound.wav", "start": 8398998, "end": 8773596, "audio": 1}], "remote_package_size": 8773596, "package_uuid": "00a9337e-ff65-4cba-976a-1e21411bcf53"});
   
   })();
   
@@ -9216,13 +9216,13 @@ var _main = Module["_main"] = function() {
 };
 
 /** @type {function(...*):?} */
-var _malloc = Module["_malloc"] = function() {
-  return (_malloc = Module["_malloc"] = Module["asm"]["malloc"]).apply(null, arguments);
+var _free = Module["_free"] = function() {
+  return (_free = Module["_free"] = Module["asm"]["free"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var _free = Module["_free"] = function() {
-  return (_free = Module["_free"] = Module["asm"]["free"]).apply(null, arguments);
+var _malloc = Module["_malloc"] = function() {
+  return (_malloc = Module["_malloc"] = Module["asm"]["malloc"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
@@ -9291,10 +9291,21 @@ var dynCall_viijii = Module["dynCall_viijii"] = function() {
 };
 
 
-function invoke_ii(index,a1) {
+function invoke_viiii(index,a1,a2,a3,a4) {
   var sp = stackSave();
   try {
-    return wasmTable.get(index)(a1);
+    wasmTable.get(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0 && e !== 'longjmp') throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return wasmTable.get(index)(a1,a2);
   } catch(e) {
     stackRestore(sp);
     if (e !== e+0 && e !== 'longjmp') throw e;
@@ -9335,6 +9346,17 @@ function invoke_vi(index,a1) {
   }
 }
 
+function invoke_ii(index,a1) {
+  var sp = stackSave();
+  try {
+    return wasmTable.get(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0 && e !== 'longjmp') throw e;
+    _setThrew(1, 0);
+  }
+}
+
 function invoke_viii(index,a1,a2,a3) {
   var sp = stackSave();
   try {
@@ -9350,17 +9372,6 @@ function invoke_vii(index,a1,a2) {
   var sp = stackSave();
   try {
     wasmTable.get(index)(a1,a2);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
-}
-
-function invoke_iii(index,a1,a2) {
-  var sp = stackSave();
-  try {
-    return wasmTable.get(index)(a1,a2);
   } catch(e) {
     stackRestore(sp);
     if (e !== e+0 && e !== 'longjmp') throw e;
@@ -9405,17 +9416,6 @@ function invoke_i(index) {
   var sp = stackSave();
   try {
     return wasmTable.get(index)();
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
-}
-
-function invoke_viiii(index,a1,a2,a3,a4) {
-  var sp = stackSave();
-  try {
-    wasmTable.get(index)(a1,a2,a3,a4);
   } catch(e) {
     stackRestore(sp);
     if (e !== e+0 && e !== 'longjmp') throw e;
