@@ -265,9 +265,12 @@ void Engine::Update()
 			duckFrame = {x * 500, 0, 500, 500};
 
 			if (duck1.isAlive())
-				SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
-			else if (duck1.isAlive() && duck1.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+			{
+				if (duck1.isFlipped())
+					SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+				else
+					SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
+			}
 			else if (!duck1.isAlive())
 				SDL_RenderCopy(renderer, deadDuckTexture, nullptr, rect);
 
@@ -324,12 +327,14 @@ void Engine::Update()
 			srand((unsigned)(time(0)));
 			duck1.move();
 			rect = duck1.getRect();
-			
 
 			if (duck1.isAlive())
-				SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
-			else if (duck1.isAlive() && duck1.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+			{
+				if (duck1.isFlipped())
+					SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+				else
+					SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
+			}
 			else if (!duck1.isAlive())
 				SDL_RenderCopy(renderer, deadDuckTexture, nullptr, rect);
 
@@ -339,9 +344,12 @@ void Engine::Update()
 			rect = duck2.getRect();
 
 			if (duck2.isAlive())
-				SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
-			else if (duck2.isAlive() && duck2.isFlipped())
-				SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+			{
+				if (duck2.isFlipped())
+					SDL_RenderCopyEx(renderer, duckTexture1, &duckFrame, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+				else
+					SDL_RenderCopy(renderer, duckTexture1, &duckFrame, rect);
+			}
 			else if (!duck2.isAlive())
 				SDL_RenderCopy(renderer, deadDuckTexture, nullptr, rect);
 
